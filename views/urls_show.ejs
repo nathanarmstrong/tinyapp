@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+  <title><%= email %></title>
+</head>
+
+<body>
+  <% if(email){%>
+    <form action="/logout" method="post">
+    <button type="submit">Logout</button>
+  <h1>Short form: <%= url.short %></h1>
+
+  <h2>Update this URL</h2>
+  <form action="/urls/<%= url.short %>" method="post">
+    <p>
+      <label for="url-long">Long</label>
+      <input id="url-long" name="long" value="<%= url.long %>">
+    </p>
+
+    <p>
+      <button>Update</button>
+    </p>
+  </form>
+
+  <% } else {%>
+    <p>You should go <a href='/login'>login</a></p>
+  <% } %>
+
+</body>

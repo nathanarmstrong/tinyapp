@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+  <title><%= email %></title>
+</head>
+
+<body>
+  <% if(email){%>
+    <h1>Hi!</h1>
+    <p> you must be <%= email %></p>
+    <form action="/urls">
+    <button type="submit">Welcome</button>
+    </form>
+
+    <form action="/logout" method="post">
+    <button type="submit">Logout</button>
+  <% } else {%>
+  <p>You should go <a href='/login'>login</a></p>
+
+  <% } %>
+
+
+
+
+</body>

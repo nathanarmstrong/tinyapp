@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+  <title><%= email %></title>
+</head>
+
+
+<body>
+  <% if(email){%>
+
+    <p>You are already logged in<a href='/urls'>Welcome</a></p>
+
+    <form action="/logout" method="post">
+    <button type="submit">Logout</button>
+
+
+    <% } else {%>
+    <form action="/login" method="post">
+    <div class="container">
+    <label><b>Email</b></label>
+    <input type="email" placeholder="Enter email" name="email" required>
+
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
+
+    <button type="submit">Login</button>
+    <% } %>
+  </div>
+</body>
+</form>
