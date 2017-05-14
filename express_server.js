@@ -16,6 +16,32 @@ app.use(bodyParser.urlencoded({
 
 
 
+
+// urls list
+const urls = [{
+  short: 'b2xVn2',
+  long: 'http://www.lighthouselabs.ca'
+},{
+  short:'9sm5xK',
+  long: 'http://www.google.com'
+}];
+
+
+//user list
+const user = [{
+  'test': {
+    id: 'test',
+    email: 'asd@asd',
+    password: 'asd'
+  },
+  'test2': {
+    id: 'test2',
+    email: 'asd@asd.asd',
+    password: 'asd'
+  }
+}];
+
+
 // Root route
 app.get('/', (req, res) => {
   const email = req.signedCookies.email;
@@ -45,31 +71,6 @@ app.post('/logout', (req, res) => {
   res.clearCookie('email', req.body.email);
   res.redirect('/login')
 });
-
-
-// urls list
-const urls = [{
-  short: 'b2xVn2',
-  long: 'http://www.lighthouselabs.ca'
-},{
-  short:'9sm5xK',
-  long: 'http://www.google.com'
-}];
-
-
-//user list
-const user = [{
-  'test': {
-    id: 'test',
-    email: 'asd@asd',
-    password: 'asd'
-  },
-  'test2': {
-    id: 'test2',
-    email: 'asd@asd.asd',
-    password: 'asd'
-  }
-}];
 
 
 // Search
@@ -119,11 +120,13 @@ app.post('/urls/:short/delete', (req, res) => {
 
 // registration
 app.get('/register', (req, res) => {
-  res.render('url_regestration')
+  res.render('url_regestration', {user: user});
 });
 
-
+// registration handler
 app.post('/register', (req, res) => {
+  console.log(req.body)
+  user.push(req.body)
   res.redirect('/login')
 });
 

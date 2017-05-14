@@ -1,25 +1,39 @@
 <!DOCTYPE html>
-<form action='/login'>
-  <div class='container'>
-    <label><b>Email</b></label>
-    <input type='text' placeholder='Enter Email' name='email' required>
-
-    <label for='new-users-password'><b>Password</b></label>
-    <input type='password' id='new-users-password' placeholder='Enter Password' name='psw' required>
+<head>
+  <title>Sign Up</title>
+</head>
 
 
-    <input type='checkbox' checked='checked'> Remember me
+<body>
+  <form action='/login'>
+    <div class='container'>
+      <label><b>Email</b></label>
+      <input type='text' placeholder='Enter Email' name='email' required>
+
+      <label for='new-users-password'><b>Password</b></label>
+      <input type='password' id='new-users-password' placeholder='Enter Password' name='psw' required>
 
 
-    <div class='clearfix'>
+      <input type='checkbox' checked='checked'> Remember me
 
-      <button type='submit' class='signupbtn'>Sign Up</button>
+
+      <div class='clearfix'>
+
+        <button type='submit' class='signupbtn'>Sign Up</button>
+      </div>
     </div>
-  </div>
-</form>
-<form action='/login'>
-  <button type='submit'  class='cancelbtn'>Cancel</button>
-</form>
+  </form>
+  <form action='/login'>
+    <button type='submit'  class='cancelbtn'>Cancel</button>
+  </form>
+    <ul>
+      <% for (const userIndex in user) { %>
+        <li>
+          <%= user[userIndex].email %> - <%= user[userIndex].password %>
+          <%user.forEach(function(user) { %>
+          <% }) %>
 
-
-
+        </li>
+      <% } %>
+    </ul>
+</body>
