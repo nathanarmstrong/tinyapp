@@ -49,11 +49,11 @@ app.post('/logout', (req, res) => {
 
 // urls list
 const urls = [{
-  short: "b2xVn2",
-  long: "http://www.lighthouselabs.ca"
+  short: 'b2xVn2',
+  long: 'http://www.lighthouselabs.ca'
 },{
-  short:"9sm5xK",
-  long: "http://www.google.com"}
+  short:'9sm5xK',
+  long: 'http://www.google.com'}
 ];
 
 
@@ -75,10 +75,7 @@ const user = {
 // Search
 app.get('/urls', (req, res) => {
   const email = req.signedCookies.email;
-  res.render('urls_index', {
-    email: req.cookies.email,
-    urls: urls
-  });
+  res.render('urls_index', { email: req.cookies.email, urls: urls });
 });
 
 // Create
@@ -98,10 +95,7 @@ app.get('/urls/:short', (req, res) => {
     return;
   }
   const email = req.signedCookies.email;
-  res.render('urls_show', {
-    email: req.cookies.email,
-    url: url
-  });
+  res.render('urls_show', { email: req.cookies.email, url: url });
 });
 
 // Replace
@@ -146,8 +140,8 @@ app.listen(8080, () => {
 // genertat random 6 digig characters
 
 function generateRandomString() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var text = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for( var i=0; i < 5; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
