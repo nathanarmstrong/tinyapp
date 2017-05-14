@@ -27,6 +27,12 @@ app.get('/login', (req, res) => {
   res.render('urls_login', {email: req.cookies.email });
 });
 
+// cookies!!!
+app.post('/login', (req, res) => {
+  const { email, passowrd } = req.body;
+  res.cookie('email', req.body.email);
+  res.redirect('/')
+});
 
 // logout
 app.get('/logout', ( req, res) => {
@@ -40,14 +46,8 @@ app.post('/logout', (req, res) => {
   res.redirect('/login')
 });
 
-// cookies!!!
-app.post('/login', (req, res) => {
-  const { email, passowrd } = req.body;
-  res.cookie('email', req.body.email);
-  res.redirect('/')
-});
 
-// routes
+// urls list
 const urls = [{
   short: "b2xVn2",
   long: "http://www.lighthouselabs.ca"
@@ -55,6 +55,22 @@ const urls = [{
   short:"9sm5xK",
   long: "http://www.google.com"}
 ];
+
+
+//user list
+const user = {
+  'test': {
+    id: 'test',
+    email: 'asd@asd',
+    password: 'asd'
+  },
+  'test2': {
+    id: 'test2',
+    email: 'asd@asd.asd',
+    password: 'asd'
+  }
+}
+
 
 // Search
 app.get('/urls', (req, res) => {
@@ -107,13 +123,27 @@ app.post('/urls/:short/delete', (req, res) => {
   res.redirect('/urls');
 });
 
+// registration
+app.get('/register', (req, res) => {
+  res.render('url_regestration')
+});
 
 
+app.post('/register', (req, res) => {
+  res.redirect('/login')
+});
+
+
+
+// server port
 app.listen(8080, () => {
   console.log('it\'s listening');
 });
 
 
+
+
+// genertat random 6 digig characters
 
 function generateRandomString() {
     var text = "";
