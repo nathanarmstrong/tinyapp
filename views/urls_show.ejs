@@ -5,16 +5,16 @@
 
 <body>
   <% if(email){%>
-    <form action="/logout" method="post">
-    <button type="submit">Logout</button>
+    <form action='/logout' method='post'>
+      <button type='submit'>Logout</button>
     </form>
   <h1>Short form: <%= url.short %></h1>
 
   <h2>Update this URL</h2>
-  <form action="/urls/<%= url.short %>" method="post">
+  <form action='/urls/<%= url.short %>' method='post'>
     <p>
-      <label for="url-long">Long</label>
-      <input id="url-long" name="long" value="<%= url.long %>">
+      <label for='url-long'>Long</label>
+      <input id='url-long' name='long' value='<%= url.long %>'>
     </p>
 
     <p>
