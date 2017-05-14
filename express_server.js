@@ -45,12 +45,12 @@ app.get('/', (req, res) => {
 
 //login
 app.get('/login', (req, res) => {
-  res.render('urls_login', {email: req.cookies.email });
+  res.render('urls_login', {email: req.cookies.email, user: user });
 });
 
 // cookies!!!
 app.post('/login', (req, res) => {
-  const { email, passowrd } = req.body;
+  const { email, password } = req.body;
   res.cookie('email', req.body.email);
   res.redirect('/')
 });
@@ -115,11 +115,12 @@ app.post('/urls/:short/delete', (req, res) => {
 
 // registration
 app.get('/register', (req, res) => {
-  res.render('url_regestration', {user: user});
+  res.render('url_regestration', {email: req.cookies.email, user: user});
 });
 
 // registration handler
 app.post('/register', (req, res) => {
+
   console.log(req.body)
   user.push(req.body)
   res.redirect('/login')
