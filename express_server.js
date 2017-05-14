@@ -53,12 +53,12 @@ const urls = [{
   long: 'http://www.lighthouselabs.ca'
 },{
   short:'9sm5xK',
-  long: 'http://www.google.com'}
-];
+  long: 'http://www.google.com'
+}];
 
 
 //user list
-const user = {
+const user = [{
   'test': {
     id: 'test',
     email: 'asd@asd',
@@ -69,7 +69,7 @@ const user = {
     email: 'asd@asd.asd',
     password: 'asd'
   }
-}
+}];
 
 
 // Search
