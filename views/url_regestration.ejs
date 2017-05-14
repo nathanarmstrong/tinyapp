@@ -5,19 +5,19 @@
 
 
 <body>
-  <form action='/login'>
+  <form action='/register' method="post">
     <div class='container'>
-      <label><b>Email</b></label>
-      <input type='text' placeholder='Enter Email' name='email' required>
+      <label for='new-user-email'>Email</label>
+      <input  id='new-user-email' type='email' placeholder='Enter Email' name='email' required>
 
       <label for='new-users-password'><b>Password</b></label>
-      <input type='password' id='new-users-password' placeholder='Enter Password' name='psw' required>
+      <input id='new-users-password' type='password'  placeholder='Enter Password' name='password' required>
 
 
       <input type='checkbox' checked='checked'> Remember me
 
 
-      <div class='clearfix'>
+    <div class='clearfix'>
 
         <button type='submit' class='signupbtn'>Sign Up</button>
       </div>
@@ -26,14 +26,18 @@
   <form action='/login'>
     <button type='submit'  class='cancelbtn'>Cancel</button>
   </form>
+</body>
+
+
     <ul>
       <% for (const userIndex in user) { %>
         <li>
           <%= user[userIndex].email %> - <%= user[userIndex].password %>
-          <%user.forEach(function(user) { %>
+          <%user.forEach(function(user){ %>
+
           <% }) %>
 
+          </form>
         </li>
       <% } %>
     </ul>
-</body>

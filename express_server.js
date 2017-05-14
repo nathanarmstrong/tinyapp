@@ -1,4 +1,4 @@
-
+// add on
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
@@ -15,8 +15,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-
-
 // urls list
 const urls = [{
   short: 'b2xVn2',
@@ -29,16 +27,13 @@ const urls = [{
 
 //user list
 const user = [{
-  'test': {
     id: 'test',
     email: 'asd@asd',
     password: 'asd'
-  },
-  'test2': {
+  },{
     id: 'test2',
     email: 'asd@asd.asd',
     password: 'asd'
-  }
 }];
 
 
@@ -140,7 +135,7 @@ app.listen(8080, () => {
 
 
 
-// genertat random 6 digig characters
+// generate random 6 digit characters
 
 function generateRandomString() {
     var text = '';
