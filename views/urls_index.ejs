@@ -7,45 +7,45 @@
 <body>
 
   <% if(email){%>
-     <form action="/logout" method="post">
-    <button type="submit">Logout</button>
+    <form action='/logout' method='post'>
+      <button type='submit'>Logout</button>
     </form>
 
-  <h1>URLS</h1>
+    <h1>URLS</h1>
 
-  <h2>Create new URL</h2>
+    <h2>Create new URL</h2>
 
 
 
-  <form action="/urls" method="post">
-    <p>
-      <label for="new-url-long">Long</label>
-      <input id="new-url-long" name="long" required>
-    </p>
-    <p>
-      <label for="new-url-short">Short</label>
-      <input id="new-url-short" name="short" required>
-    </p>
-    <p>
-      <button >Create</button>
-    </p>
-  </form>
+    <form action='/urls' method='post'>
+      <p>
+        <label for='new-url-long'>Long</label>
+        <input id='new-url-long' name='long' required>
+      </p>
+      <p>
+        <label for='new-url-short'>Short</label>
+        <input id='new-url-short' name='short' required>
+      </p>
+      <p>
+        <button >Create</button>
+      </p>
+    </form>
 
-  <ul>
-    <% for (const urlIndex in urls) { %>
-      <li>
-        <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %> <a href="/urls/<%= urls[urlIndex].short %>">Edit</a>
-        <%urls.forEach(function(urls){ %>
+    <ul>
+      <% for (const urlIndex in urls) { %>
+        <li>
+          <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %> <a href='/urls/<%= urls[urlIndex].short %>'>Edit</a>
+          <%urls.forEach(function(urls){ %>
 
-        <% }) %>
-        <form action="/urls/<%= urls[urlIndex].short %>/delete" method="post">
-          <button>Delete</button>
-        </form>
-      </li>
-    <% } %>
-  </ul>
+          <% }) %>
+          <form action='/urls/<%= urls[urlIndex].short %>/delete' method='post'>
+            <button>Delete</button>
+          </form>
+        </li>
+      <% } %>
+    </ul>
   <% } else {%>
-  <p>You should go <a href='/login'>login</a></p>
+    <p>You should go <a href='/login'>login</a></p>
   <% } %>
 
 </body>
