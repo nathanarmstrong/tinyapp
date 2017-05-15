@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 
+
 // urls list
 const urls = [{
   short: 'b2xVn2',
@@ -27,28 +28,34 @@ const urls = [{
 
 //user list
 const user = [{
-    id: 'nathan',
-    email: 'asd@asd',
-    password: 'asd'
+  email: 'asd@asd',
+  password: 'asd'
 }];
+
+
+//login
+app.get('/login', (req, res) => {
+  res.render('urls_login', { email: req.cookies.email, user: user});
+});
+
+// cookies!!!
+app.post('/login', (req, res) => {
+  for (const userIndex in user){
+    if(user[userIndex].email && user[userIndex].password === req.body.password && req.body.email){
+      res.cookie('email', req.body.email);
+      res.redirect('/');
+    }else {
+      res.redirect('/login')
+    }
+}
+});
+
 
 
 // Root route
 app.get('/', (req, res) => {
   const email = req.signedCookies.email;
   res.render('urls_test', { email: req.cookies.email});
-});
-
-//login
-app.get('/login', (req, res) => {
-  res.render('urls_login', { email: req.cookies.email });
-});
-
-// cookies!!!
-app.post('/login', (req, res) => {
-    res.cookie('email', req.body.email);
-     res.redirect('/');
-
 });
 
 // logout
@@ -116,10 +123,15 @@ app.get('/register', (req, res) => {
 
 // registration handler
 app.post('/register', (req, res) => {
-
-  console.log(req.body);
-  user.push(req.body);
-  res.redirect('/login');
+  for (const userIndex in user){
+    if(user[userIndex].email && user[userIndex].password === req.body.password && req.body.email){
+      res.render('error_400')
+    } else {
+      console.log(req.body);
+      user.push(req.body);
+      res.redirect('/login');
+    }
+  }
 });
 
 
