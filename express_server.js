@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(cookieParser("test"));
 
 app.use(bodyParser.urlencoded({
-  extended: true;
+  extended: true
 }));
 
 
