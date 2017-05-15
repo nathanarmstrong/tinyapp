@@ -1,7 +1,7 @@
 // add on
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const app = express();
 
 // Configuration
@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(cookieParser("test"));
 
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true;
 }));
 
 
@@ -27,12 +27,8 @@ const urls = [{
 
 //user list
 const user = [{
-    id: 'test',
+    id: 'nathan',
     email: 'asd@asd',
-    password: 'asd'
-  },{
-    id: 'test2',
-    email: 'asd@asd.asd',
     password: 'asd'
 }];
 
@@ -40,19 +36,19 @@ const user = [{
 // Root route
 app.get('/', (req, res) => {
   const email = req.signedCookies.email;
-  res.render('urls_test', { email: req.cookies.email });
+  res.render('urls_test', { email: req.cookies.email});
 });
 
 //login
 app.get('/login', (req, res) => {
-  res.render('urls_login', {email: req.cookies.email, user: user });
+  res.render('urls_login', { email: req.cookies.email });
 });
 
 // cookies!!!
 app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  res.cookie('email', req.body.email);
-  res.redirect('/')
+    res.cookie('email', req.body.email);
+     res.redirect('/');
+
 });
 
 // logout
@@ -62,9 +58,9 @@ app.get('/logout', ( req, res) => {
 });
 // delete cookies
 app.post('/logout', (req, res) => {
-  const { email, passowrd } = req.body;
+  const { email, password } = req.body;
   res.clearCookie('email', req.body.email);
-  res.redirect('/login')
+  res.redirect('/login');
 });
 
 
@@ -103,7 +99,7 @@ app.post('/urls/:short', (req, res) => {
     return;
   }
   url.long = req.body.long;
-  res.redirect('/urls')
+  res.redirect('/urls');
 });
 
 // Destroy
@@ -121,9 +117,9 @@ app.get('/register', (req, res) => {
 // registration handler
 app.post('/register', (req, res) => {
 
-  console.log(req.body)
-  user.push(req.body)
-  res.redirect('/login')
+  console.log(req.body);
+  user.push(req.body);
+  res.redirect('/login');
 });
 
 
@@ -142,9 +138,9 @@ function generateRandomString() {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    for( var i=0; i < 5; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
+    for( var i=0; i < 5; i++ ){
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
     return text;
 }
 
