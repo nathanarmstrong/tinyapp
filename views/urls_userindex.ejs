@@ -31,6 +31,22 @@
       <button type='submit'  class='cancelbtn'>Cancel</button>
   </form>
 
+
+      <ul>
+      <% for (const urlIndex in urls) { %>
+        <li>
+
+          <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %> <a href='/urls/<%= urls[urlIndex].short %>'>Edit</a>
+          <%urls.forEach(function(urls){ %>
+          <% }) %>
+
+          <form action='/urls/<%= urls[urlIndex].short %>/delete' method='post'>
+            <button>Delete</button>
+          </form>
+        </li>
+      <% } %>
+    </ul>
+
   <% } else {%>
     <p>You should go <a href='/login'><button>login</button></a></p>
   <% } %>

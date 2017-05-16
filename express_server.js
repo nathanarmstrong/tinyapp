@@ -1,14 +1,17 @@
 // add on
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const app = express();
 
 // Configuration
 app.set('view engine', 'ejs');
 
 // Middlewares
-app.use(cookieParser("test"));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'development']
+}));
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -39,7 +42,8 @@ const user = [{
 
 //login
 app.get('/login', (req, res) => {
-  res.render('urls_login', { email: req.cookies.email, user: user});
+  const email = req.session.email;
+  res.render('urls_login', { email: req.session.email, user: user});
 });
 
 // cookies!!!
@@ -47,37 +51,38 @@ app.post('/login', (req, res) => {
   for (const userIndex in user){
     console.log(user[userIndex].email + req.body.email)
     if(user[userIndex].email === req.body.email && user[userIndex].password === req.body.password){
-      res.cookie('email', req.body.email);
+      req.session.email = req.body.email;
       res.redirect('/');
+      return;
     }
   }
+  res.status(401).send('bad credentials');
 });
 
 
 
 // Root route
 app.get('/', (req, res) => {
-  const email = req.signedCookies.email;
-  res.render('urls_test', { email: req.cookies.email});
+  const email = req.session.email;
+  res.render('urls_test', { email: req.session.email});
 });
 
 // logout
 app.get('/logout', ( req, res) => {
-  const email =req.signedCookies.email;
-  res.render('urls_logout', { email: req.cookies.email });
+  const email =req.sessions.email;
+  res.render('urls_logout', { email: req.session.email });
 });
 // delete cookies
 app.post('/logout', (req, res) => {
   const { email, password } = req.body;
-  res.clearCookie('email', req.body.email);
+  req.session.email = req.body.email;
   res.redirect('/login');
 });
 
 
 // Search
 app.get('/urls', (req, res) => {
-  const email = req.signedCookies.email;
-  res.render('urls_index', { email: req.cookies.email, urls: urls, user: user});
+  res.render('urls_index', { email: req.sessoin.email, urls: urls, user: user});
 });
 
 // Create
@@ -88,15 +93,19 @@ app.post('/urls', (req, res) => {
   res.redirect('/urls');
 });
 
-app.get('/urls/:user.email', (req, res) => {
-  const email = req.signedCookies.email;
-  res.render('urls_userindex', {email: req.cookies.email, urls: urls})
+app.get('/urls/create', (req, res) => {
+  if (req.sessions.user_id){
+
+  }else{
+    res.status(403).send('Your are not logged in')
+  }
+
 })
 
-app.post('/urls/:user.email', (req, res) => {
+app.post('/urls/create', (req, res) => {
   console.log(req.body);
   urls.push(req.body);
-  res.redirect('/urls/:user.email');
+  res.redirect('/urls/create');
 });
 
 // Retrieve
@@ -107,8 +116,8 @@ app.get('/urls/:short', (req, res) => {
     res.send('URL not found');
     return;
   }
-  const email = req.signedCookies.email;
-  res.render('urls_show', { email: req.cookies.email, url: url });
+  const email = req.sessions.email;
+  res.render('urls_show', { email: req.sessions.email, url: url });
 });
 
 // Replace
@@ -132,7 +141,7 @@ app.post('/urls/:short/delete', (req, res) => {
 
 // registration
 app.get('/register', (req, res) => {
-  res.render('url_regestration', {email: req.cookies.email, user: user});
+  res.render('url_regestration', {email: req.sessions.email, user: user});
 });
 
 // registration handler

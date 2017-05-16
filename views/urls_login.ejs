@@ -17,17 +17,27 @@
   <% } else {%>
     <form action='/login' method='post'>
       <div class='container'>
+      <p>
         <label for='email'><b>Email</b></label>
         <input type='email' placeholder='Enter email' name='email' required>
-
-       <label for='password'><b>Password</b></label>
-       <input type='password' placeholder='Enter Password' name='password' required>
-
-        <button type='submit'>Login</button>
+      </p>
+      <p>
+        <label for='password'><b>Password</b></label>
+        <input type='password' placeholder='Enter Password' name='password' required>
+      </p>
+      <p>
+        <button>
+          Login
+        </button>
+      </p>
     </form>
+      <p>
         <form action='/register'>
-        <button type='submit'>Register</button>
-    </form>
-  <% } %>
+          <button>
+            Register
+          </button>
       </div>
+    </form>
+      </p>
+  <% } %>
 </body>
