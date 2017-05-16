@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
 const app = express();
 
 // Configuration
@@ -32,17 +33,17 @@ const urls = [{
 //user list
 const user = [{
   email: '1@1',
-  password: '1'
+  password: '$2a$10$dEhzPIMAcC7evMah9n/W3ujAZfsTfBzySaoO.eiVqCefLLFckPH6a'
 
 },{
   email: 'asd@asd',
-  password: 'asd'
+  password: '$2a$10$2B7Rta2A4ghkjV5FW0JM/uUZgbQ2VIQ/DCY6AUxh/07AeVrbyXgCC'
 }];
 
 
 //login
 app.get('/login', (req, res) => {
-  const email = req.session.email;
+  let email = req.session.email;
   res.render('urls_login', { email: req.session.email, user: user});
 });
 
@@ -50,7 +51,7 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   for (const userIndex in user){
     console.log(user[userIndex].email + req.body.email)
-    if(user[userIndex].email === req.body.email && user[userIndex].password === req.body.password){
+    if(user[userIndex].email === req.body.email && bcrypt.compareSync(req.body.password, user[userIndex].password)){
       req.session.email = req.body.email;
       res.redirect('/');
       return;
@@ -60,29 +61,48 @@ app.post('/login', (req, res) => {
 });
 
 
+// registration
+app.get('/register', (req, res) => {
+  res.render('url_regestration', {email: req.session.email, user: user});
+});
+
+// registration handler
+app.post('/register', (req, res) => {
+  for (const userIndex in user){
+    if(user[userIndex].email === req.body.email){
+      res.status(400).send('User already exists');
+      return;
+    }
+  }
+
+  user.push(req.body);
+  res.redirect('/login');
+});
+
 
 // Root route
 app.get('/', (req, res) => {
-  const email = req.session.email;
+  let email = req.session.email;
   res.render('urls_test', { email: req.session.email});
 });
 
 // logout
 app.get('/logout', ( req, res) => {
-  const email =req.sessions.email;
+  let email =req.sessions.email;
   res.render('urls_logout', { email: req.session.email });
 });
 // delete cookies
 app.post('/logout', (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
   req.session.email = req.body.email;
   res.redirect('/login');
 });
 
 
+
 // Search
 app.get('/urls', (req, res) => {
-  res.render('urls_index', { email: req.sessoin.email, urls: urls, user: user});
+  res.render('urls_index', { email: req.session.email, urls: urls, user: user});
 });
 
 // Create
@@ -94,12 +114,8 @@ app.post('/urls', (req, res) => {
 });
 
 app.get('/urls/create', (req, res) => {
-  if (req.sessions.user_id){
-
-  }else{
-    res.status(403).send('Your are not logged in')
-  }
-
+  const email = req.session.email;
+  res.render('urls_userindex', {email: req.session.email, urls: urls})
 })
 
 app.post('/urls/create', (req, res) => {
@@ -110,19 +126,18 @@ app.post('/urls/create', (req, res) => {
 
 // Retrieve
 app.get('/urls/:short', (req, res) => {
-  const url = urls.find(m => m.short === req.params.short);
+  let url = urls.find(m => m.short === req.params.short);
   if (!urls) {
     res.status(404);
     res.send('URL not found');
     return;
   }
-  const email = req.sessions.email;
-  res.render('urls_show', { email: req.sessions.email, url: url });
+  res.render('urls_show', { email: req.session.email, url: url });
 });
 
 // Replace
 app.post('/urls/:short', (req, res) => {
-  const url = urls.find(m => m.short === req.params.short);
+  let url = urls.find(m => m.short === req.params.short);
   if (!urls) {
     res.status(404);
     res.send('URL not found');
@@ -134,28 +149,12 @@ app.post('/urls/:short', (req, res) => {
 
 // Destroy
 app.post('/urls/:short/delete', (req, res) => {
-  const urlIndex = urls.findIndex(m => m.short === req.params.short);
+  let urlIndex = urls.findIndex(m => m.short === req.params.short);
   urls.splice(urlIndex, 1);
   res.redirect('/urls');
 });
 
-// registration
-app.get('/register', (req, res) => {
-  res.render('url_regestration', {email: req.sessions.email, user: user});
-});
 
-// registration handler
-app.post('/register', (req, res) => {
-  for (const userIndex in user){
-    if(user[userIndex].email && user[userIndex].password === req.body.password && req.body.email){
-      res.render('error_400')
-    } else {
-      console.log(req.body);
-      user.push(req.body);
-      res.redirect('/login');
-    }
-  }
-});
 
 
 

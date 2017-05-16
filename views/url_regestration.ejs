@@ -27,15 +27,33 @@
       <input type='checkbox' checked='checked'> Remember me
 
 
-    <div class='clearfix'>
+      <div class='clearfix'>
 
-        <button type='submit' class='signupbtn'>Sign Up</button>
+        <button type='submit' class='signupbtn'>
+          Sign Up
+        </button>
       </div>
     </div>
   </form>
   <form action='/login'>
-    <button type='submit'  class='cancelbtn'>Cancel</button>
+    <button type='submit'  class='cancelbtn'>
+      Cancel
+    </button>
   </form>
+
+<p>list of user & thier passwords</p>
+     <ul>
+       <% for (const userIndex in user) { %>
+         <li>
+           <%= user[userIndex].email %> - <%= user[userIndex].password %>
+           <%user.forEach(function(user){ %>
+
+           <% }) %>
+
+           </form>
+         </li>
+     <% } %>
+     </ul>
 
 
 
