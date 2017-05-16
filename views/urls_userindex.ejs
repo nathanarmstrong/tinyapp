@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+  <title><%= email %></title>
+</head>
+
+
+<body>
+
+  <% if(email){%>
+    <form action='/logout' method='post'>
+      <button type='submit'>Logout</button>
+    </form>
+
+
+
+
+   <form action='/urls' method='post'>
+      <p>
+        <label for='new-url-long'>Long</label>
+        <input id='new-url-long' name='long' required>
+      </p>
+      <p>
+        <label for='new-url-short'>Short</label>
+        <input id='new-url-short' name='short' required>
+      </p>
+      <p>
+        <button >Create</button>
+      </p>
+    </form>
+
+  <% } else {%>
+    <p>You should go <a href='/login'><button>login</button></a></p>
+  <% } %>
+
+</body>

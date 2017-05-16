@@ -11,33 +11,25 @@
       <button type='submit'>Logout</button>
     </form>
 
+
+        <h2>Create new URL</h2>
+
+      <form action="/urls/:user.email">
+        <button type='submit' >Create</button>
+      </form>
+
+
     <h1>URLS</h1>
 
-    <h2>Create new URL</h2>
-
-
-
-    <form action='/urls' method='post'>
-      <p>
-        <label for='new-url-long'>Long</label>
-        <input id='new-url-long' name='long' required>
-      </p>
-      <p>
-        <label for='new-url-short'>Short</label>
-        <input id='new-url-short' name='short' required>
-      </p>
-      <p>
-        <button >Create</button>
-      </p>
-    </form>
 
     <ul>
       <% for (const urlIndex in urls) { %>
         <li>
+
           <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %> <a href='/urls/<%= urls[urlIndex].short %>'>Edit</a>
           <%urls.forEach(function(urls){ %>
-
           <% }) %>
+
           <form action='/urls/<%= urls[urlIndex].short %>/delete' method='post'>
             <button>Delete</button>
           </form>

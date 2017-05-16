@@ -28,6 +28,10 @@ const urls = [{
 
 //user list
 const user = [{
+  email: '1@1',
+  password: '1'
+
+},{
   email: 'asd@asd',
   password: 'asd'
 }];
@@ -41,13 +45,12 @@ app.get('/login', (req, res) => {
 // cookies!!!
 app.post('/login', (req, res) => {
   for (const userIndex in user){
-    if(user[userIndex].email && user[userIndex].password === req.body.password && req.body.email){
+    console.log(user[userIndex].email + req.body.email)
+    if(user[userIndex].email === req.body.email && user[userIndex].password === req.body.password){
       res.cookie('email', req.body.email);
       res.redirect('/');
-    }else {
-      res.redirect('/login')
     }
-}
+  }
 });
 
 
@@ -74,15 +77,26 @@ app.post('/logout', (req, res) => {
 // Search
 app.get('/urls', (req, res) => {
   const email = req.signedCookies.email;
-  res.render('urls_index', { email: req.cookies.email, urls: urls });
+  res.render('urls_index', { email: req.cookies.email, urls: urls, user: user});
 });
 
 // Create
 app.post('/urls', (req, res) => {
   console.log(req.body);
-  urls.push(req.body);
+  urls.push(req.body)
 
   res.redirect('/urls');
+});
+
+app.get('/urls/:user.email', (req, res) => {
+  const email = req.signedCookies.email;
+  res.render('urls_userindex', {email: req.cookies.email, urls: urls})
+})
+
+app.post('/urls/:user.email', (req, res) => {
+  console.log(req.body);
+  urls.push(req.body);
+  res.redirect('/urls/:user.email');
 });
 
 // Retrieve
