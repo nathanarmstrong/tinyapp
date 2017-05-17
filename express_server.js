@@ -3,6 +3,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+
+
+
+
+
 const app = express();
 
 // Configuration
@@ -23,19 +28,23 @@ app.use(bodyParser.urlencoded({
 // urls list
 const urls = [{
   short: 'b2xVn2',
-  long: 'http://www.lighthouselabs.ca'
+  long: 'http://www.lighthouselabs.ca',
+  user_id: '1'
 },{
   short:'9sm5xK',
-  long: 'http://www.google.com'
+  long: 'http://www.google.com',
+  user_id: '2'
 }];
 
 
 //user list
 const user = [{
+  id: 1,
   email: '1@1',
   password: '$2a$10$dEhzPIMAcC7evMah9n/W3ujAZfsTfBzySaoO.eiVqCefLLFckPH6a'
 
 },{
+  id: 2,
   email: 'asd@asd',
   password: '$2a$10$2B7Rta2A4ghkjV5FW0JM/uUZgbQ2VIQ/DCY6AUxh/07AeVrbyXgCC'
 }];
@@ -50,7 +59,6 @@ app.get('/login', (req, res) => {
 // cookies!!!
 app.post('/login', (req, res) => {
   for (const userIndex in user){
-    console.log(user[userIndex].email + req.body.email)
     if(user[userIndex].email === req.body.email && bcrypt.compareSync(req.body.password, user[userIndex].password)){
       req.session.email = req.body.email;
       res.redirect('/');
@@ -69,13 +77,20 @@ app.get('/register', (req, res) => {
 // registration handler
 app.post('/register', (req, res) => {
   for (const userIndex in user){
+
     if(user[userIndex].email === req.body.email){
       res.status(400).send('User already exists');
       return;
     }
   }
-
-  user.push(req.body);
+  const hash = req.body.password
+  const hashedPassword = bcrypt.hashSync(hash, 10);
+  const newuser = {
+    password: hashedPassword,
+    email: req.body.email,
+    id: 3
+  }
+  user.push(newuser);
   res.redirect('/login');
 });
 
@@ -98,8 +113,6 @@ app.post('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-
-
 // Search
 app.get('/urls', (req, res) => {
   res.render('urls_index', { email: req.session.email, urls: urls, user: user});
@@ -114,14 +127,28 @@ app.post('/urls', (req, res) => {
 });
 
 app.get('/urls/create', (req, res) => {
-  const email = req.session.email;
-  res.render('urls_userindex', {email: req.session.email, urls: urls})
-})
+  if(req.session.email) {
+    let userUrls =[];
+    for (let urlsId in urls){
+      if (urls[urlsId].email === req.session.email){
+        userUrls.push(urls[urlsId]);
+      }
+    }
+    const email = req.session.email;
+    res.render('urls_userindex', {email: req.session.email, urls: userUrls})
+  }
+});
 
 app.post('/urls/create', (req, res) => {
-  console.log(req.body);
-  urls.push(req.body);
-  res.redirect('/urls/create');
+    if(req.session.email) {
+      let userUrls =[];
+      for (let urlsId in urls){
+        if (urls[urlsId].email === req.session.email){
+          userUrls.push(urls[urlsId]);
+        }
+      }
+    res.redirect('/urls/create');
+  }
 });
 
 // Retrieve
@@ -164,19 +191,6 @@ app.listen(8080, () => {
 });
 
 
-
-
-// generate random 6 digit characters
-
-function generateRandomString() {
-    var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    for( var i=0; i < 5; i++ ){
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}
 
 
 

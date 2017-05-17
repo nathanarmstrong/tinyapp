@@ -14,7 +14,7 @@
 
 
 
-   <form action='/urls' method='post'>
+   <form action='/urls/create' method='post'>
       <p>
         <label for='new-url-long'>Long</label>
         <input id='new-url-long' name='long' required>
@@ -31,21 +31,20 @@
       <button type='submit'  class='cancelbtn'>Cancel</button>
   </form>
 
-
-      <ul>
-      <% for (const urlIndex in urls) { %>
+     <ul>
+      <% for (const userUrlIndex in urls) { %>
         <li>
 
-          <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %> <a href='/urls/<%= urls[urlIndex].short %>'>Edit</a>
-          <%urls.forEach(function(urls){ %>
+          <%= userUrls[userUrlIndex].long %> - <%= userUrls[userUrlIndex].short %>
+          <%userUrls.forEach(function(userUrls){ %>
           <% }) %>
 
-          <form action='/urls/<%= urls[urlIndex].short %>/delete' method='post'>
-            <button>Delete</button>
-          </form>
+
         </li>
       <% } %>
     </ul>
+
+
 
   <% } else {%>
     <p>You should go <a href='/login'><button>login</button></a></p>
