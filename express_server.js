@@ -50,6 +50,9 @@ const user = [{
 }];
 
 
+
+
+
 //login
 app.get('/login', (req, res) => {
   let email = req.session.email;
@@ -77,7 +80,6 @@ app.get('/register', (req, res) => {
 // registration handler
 app.post('/register', (req, res) => {
   for (const userIndex in user){
-
     if(user[userIndex].email === req.body.email){
       res.status(400).send('User already exists');
       return;
@@ -93,11 +95,13 @@ app.post('/register', (req, res) => {
   res.redirect('/login');
 });
 
+
 // logout
 app.get('/logout', ( req, res) => {
   let email =req.sessions.email;
   res.render('urls_logout', { email: req.session.email });
 });
+
 // delete cookies
 app.post('/logout', (req, res) => {
   let { email, password } = req.body;
@@ -118,53 +122,47 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', { email: req.session.email, urls: urls, user: user, userUrls: userUrls});
 });
 
-// Create
 app.post('/urls', (req, res) => {
-  console.log(req.body);
   urls.push(req.body)
-
   res.redirect('/urls');
 });
 
+
+// Create
 app.get('/urls/create', (req, res) => {
-  res.render('urls_userindex', {email: req.session.email, urls: userUrls });
+  res.render('urls_userindex', {email: req.session.email, userUrls: userUrls });
 });
 
 app.post('/urls/create', (req, res) => {
   if(req.session.email) {
-    for (let urlsIndex in urls){
-      console.log(urls[urlsIndex].user_id)
-      if (urls[urlsIndex].user_id === req.session.email){
-        const newurl = {
-          short: req.body.short,
-          long: req.body.long,
-          user_id: req.session.email
-        }
-        userUrls.push(newurl);
-        console.log(userUrls);
-        res.redirect('/urls');
-
-      }
+    const random = Math.random().toString(36).substr(2, 6)
+    console.log(random)
+    const newurl = {
+      short: random,
+      long: req.body.long,
+      user_id: req.session.email
     }
-    res.status(403).send('Some thing wetn horable wrong')
+    userUrls.push(newurl);
+    res.redirect('/urls');
     return;
   }
+  res.status(403).send('Some thing wetn horable wrong')
 });
 
 // Retrieve
 app.get('/urls/:short', (req, res) => {
-  let url = urls.find(m => m.short === req.params.short);
-  if (!urls) {
+  let url = userUrls.find(m => m.short === req.params.short);
+  if (!userUrls) {
     res.status(404).send('URL not found');
     return;
   }
   res.render('urls_show', { email: req.session.email, url: url });
 });
 
-// Replace
+// Replace long
 app.post('/urls/:short', (req, res) => {
-  let url = urls.find(m => m.short === req.params.short);
-  if (!urls) {
+  let url = userUrls.find(m => m.short === req.params.short);
+  if (!userUrls) {
     res.status(404).send('URL not found');
     return;
   }
@@ -178,9 +176,6 @@ app.post('/urls/:short/delete', (req, res) => {
   urls.splice(urlIndex, 1);
   res.redirect('/urls');
 });
-
-
-
 
 
 // server port

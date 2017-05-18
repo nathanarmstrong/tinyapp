@@ -3,7 +3,6 @@
   <title><%= email %></title>
 </head>
 
-
 <body>
 
   <% if(email){%>
@@ -11,16 +10,13 @@
       <button type='submit'>Logout</button>
     </form>
 
-
         <h2>Create new URL</h2>
 
       <form action="/urls/create">
         <button type='submit' >Create</button>
       </form>
 
-
     <h1>URLS</h1>
-
 
     <ul>
       <% for (const urlIndex in urls) { %>

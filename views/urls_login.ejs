@@ -3,7 +3,6 @@
   <title>Welcome</title>
 </head>
 
-
 <body>
   <% if(email){%>
 
@@ -13,8 +12,8 @@
       <button type='submit'>Logout</button>
     </form>
 
-
   <% } else {%>
+
     <form action='/login' method='post'>
       <div class='container'>
       <p>
@@ -31,7 +30,6 @@
         </button>
       </p>
     </form>
-      <p>
         <form action='/register'>
           <button>
             Register
@@ -39,5 +37,7 @@
       </div>
     </form>
       </p>
+
   <% } %>
+
 </body>
