@@ -6,12 +6,12 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-!["registering a new user"](#)
-!["login in with new user"](#)
-!["WELCOME!!"](#)
-!["all urls in data base"](#)
-!["creating a new url while diplaying ones you have made"](#)
-!["updating your url"](#)
+!["registering a new user"](https://github.com/nathanarmstrong/tinyapp/blob/master/docs/register-page.png)
+!["login in with new user"](https://github.com/nathanarmstrong/tinyapp/blob/master/docs/login-page.png)
+!["WELCOME!!"](https://github.com/nathanarmstrong/tinyapp/blob/master/docs/welcome-page.png)
+!["all urls in data base"](https://github.com/nathanarmstrong/tinyapp/blob/master/docs/urls-page.png)
+!["creating a new url while diplaying ones you have made"](https://github.com/nathanarmstrong/tinyapp/blob/master/docs/create-page.png)
+!["updating your url"](https://github.com/nathanarmstrong/tinyapp/blob/master/docs/edit-page.png)
 
 
 
