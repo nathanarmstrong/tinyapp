@@ -172,8 +172,8 @@ app.post('/urls/:short', (req, res) => {
 
 // Destroy
 app.post('/urls/:short/delete', (req, res) => {
-  let urlIndex = urls.findIndex(m => m.short === req.params.short);
-  urls.splice(urlIndex, 1);
+  let urlIndex = userUrls.findIndex(m => m.short === req.params.short);
+  userUrls.splice(urlIndex, 1);
   res.redirect('/urls');
 });
 
