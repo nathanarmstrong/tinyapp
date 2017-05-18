@@ -7,6 +7,7 @@
 <body>
 
   <% if(email){%>
+
     <form action='/logout' method='post'>
       <button type='submit'>Logout</button>
     </form>
@@ -14,7 +15,7 @@
 
 
 
-   <form action='/urls/create' method='post'>
+    <form action='/urls/create' method='post'>
       <p>
         <label for='new-url-long'>Long</label>
         <input id='new-url-long' name='long' required>
@@ -23,31 +24,18 @@
         <label for='new-url-short'>Short</label>
         <input id='new-url-short' name='short' required>
       </p>
-      <p>
+
         <button >Create</button>
       </p>
     </form>
-    <form action='/urls'>
-      <button type='submit'  class='cancelbtn'>Cancel</button>
-  </form>
-
-     <ul>
-      <% for (const userUrlIndex in urls) { %>
-        <li>
-
-          <%= userUrls[userUrlIndex].long %> - <%= userUrls[userUrlIndex].short %>
-          <%userUrls.forEach(function(userUrls){ %>
-          <% }) %>
-
-
-        </li>
-      <% } %>
-    </ul>
 
 
 
   <% } else {%>
+
+
     <p>You should go <a href='/login'><button>login</button></a></p>
+
   <% } %>
 
 </body>

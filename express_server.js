@@ -29,22 +29,22 @@ app.use(bodyParser.urlencoded({
 const urls = [{
   short: 'b2xVn2',
   long: 'http://www.lighthouselabs.ca',
-  user_id: '1'
+  user_id: 'asd@asd'
 },{
   short:'9sm5xK',
   long: 'http://www.google.com',
-  user_id: '2'
+  user_id: '1@1'
 }];
+
+const userUrls =[];
 
 
 //user list
 const user = [{
-  id: 1,
   email: '1@1',
   password: '$2a$10$dEhzPIMAcC7evMah9n/W3ujAZfsTfBzySaoO.eiVqCefLLFckPH6a'
 
 },{
-  id: 2,
   email: 'asd@asd',
   password: '$2a$10$2B7Rta2A4ghkjV5FW0JM/uUZgbQ2VIQ/DCY6AUxh/07AeVrbyXgCC'
 }];
@@ -88,17 +88,9 @@ app.post('/register', (req, res) => {
   const newuser = {
     password: hashedPassword,
     email: req.body.email,
-    id: 3
   }
   user.push(newuser);
   res.redirect('/login');
-});
-
-
-// Root route
-app.get('/', (req, res) => {
-  let email = req.session.email;
-  res.render('urls_test', { email: req.session.email});
 });
 
 // logout
@@ -113,9 +105,17 @@ app.post('/logout', (req, res) => {
   res.redirect('/login');
 });
 
+
+// Root route
+app.get('/', (req, res) => {
+  let email = req.session.email;
+  res.render('urls_test', { email: req.session.email});
+});
+
+
 // Search
 app.get('/urls', (req, res) => {
-  res.render('urls_index', { email: req.session.email, urls: urls, user: user});
+  res.render('urls_index', { email: req.session.email, urls: urls, user: user, userUrls: userUrls});
 });
 
 // Create
@@ -127,27 +127,27 @@ app.post('/urls', (req, res) => {
 });
 
 app.get('/urls/create', (req, res) => {
-  if(req.session.email) {
-    let userUrls =[];
-    for (let urlsId in urls){
-      if (urls[urlsId].email === req.session.email){
-        userUrls.push(urls[urlsId]);
-      }
-    }
-    const email = req.session.email;
-    res.render('urls_userindex', {email: req.session.email, urls: userUrls})
-  }
+  res.render('urls_userindex', {email: req.session.email, urls: userUrls });
 });
 
 app.post('/urls/create', (req, res) => {
-    if(req.session.email) {
-      let userUrls =[];
-      for (let urlsId in urls){
-        if (urls[urlsId].email === req.session.email){
-          userUrls.push(urls[urlsId]);
+  if(req.session.email) {
+    for (let urlsIndex in urls){
+      console.log(urls[urlsIndex].user_id)
+      if (urls[urlsIndex].user_id === req.session.email){
+        const newurl = {
+          short: req.body.short,
+          long: req.body.long,
+          user_id: req.session.email
         }
+        userUrls.push(newurl);
+        console.log(userUrls);
+        res.redirect('/urls');
+
       }
-    res.redirect('/urls/create');
+    }
+    res.status(403).send('Some thing wetn horable wrong')
+    return;
   }
 });
 
@@ -155,8 +155,7 @@ app.post('/urls/create', (req, res) => {
 app.get('/urls/:short', (req, res) => {
   let url = urls.find(m => m.short === req.params.short);
   if (!urls) {
-    res.status(404);
-    res.send('URL not found');
+    res.status(404).send('URL not found');
     return;
   }
   res.render('urls_show', { email: req.session.email, url: url });
@@ -166,8 +165,7 @@ app.get('/urls/:short', (req, res) => {
 app.post('/urls/:short', (req, res) => {
   let url = urls.find(m => m.short === req.params.short);
   if (!urls) {
-    res.status(404);
-    res.send('URL not found');
+    res.status(404).send('URL not found');
     return;
   }
   url.long = req.body.long;

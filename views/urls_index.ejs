@@ -25,13 +25,17 @@
     <ul>
       <% for (const urlIndex in urls) { %>
         <li>
-
           <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %>
           <%urls.forEach(function(urls){ %>
           <% }) %>
-
-
         </li>
+      <% } %>
+      <% for (const uuIndex in userUrls) { %>
+      <li>
+        <%= userUrls[uuIndex].long %> - <%= userUrls[uuIndex].short %>
+        <% userUrls.forEach(function(userUrls){ %>
+        <% }) %>
+      </li>
       <% } %>
     </ul>
   <% } else {%>
