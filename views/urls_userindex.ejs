@@ -14,7 +14,7 @@
     <form action='/urls/create' method='post'>
       <p>
         <label for='new-url-long'>Long</label>
-        <input id='new-url-long' name='long' required>
+        <input id='new-url-long' name='long' value="http://www." required>
       </p>
 
         <button >Create</button>
@@ -26,7 +26,7 @@
         <% if ( userUrls[uuIndex].user_id === email) { %>
 
         <li>
-          <%= userUrls[uuIndex].long %> - <%= userUrls[uuIndex].short %> <a href='/urls/<%= userUrls[uuIndex].short %>'>Edit</a>
+          <%= userUrls[uuIndex].long %> - <%= userUrls[uuIndex].short %> <a href='/urls/<%= userUrls[uuIndex].short %>'><button>Edit</button></a>
           <% userUrls.forEach(function(userUrls){ %>
           <% }) %>
           <form action="/urls/<%= userUrls[uuIndex].short %>/delete" method="post">

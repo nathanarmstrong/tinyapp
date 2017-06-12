@@ -64,7 +64,7 @@ app.post('/login', (req, res) => {
   for (const userIndex in user){
     if(user[userIndex].email === req.body.email && bcrypt.compareSync(req.body.password, user[userIndex].password)){
       req.session.email = req.body.email;
-      res.redirect('/');
+      res.redirect('/urls');
       return;
     }
   }
@@ -146,7 +146,7 @@ app.post('/urls/create', (req, res) => {
     res.redirect('/urls');
     return;
   }
-  res.status(403).send('Some thing wetn horable wrong')
+  res.status(403).send('Some thing went horable wrong')
 });
 
 // Retrieve

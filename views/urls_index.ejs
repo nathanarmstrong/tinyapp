@@ -2,40 +2,39 @@
 <head>
   <title><%= email %></title>
 </head>
-
 <body>
-
   <% if(email){%>
     <form action='/logout' method='post'>
       <button type='submit'>Logout</button>
     </form>
-
         <h2>Create new URL</h2>
-
       <form action="/urls/create">
         <button type='submit' >Create</button>
       </form>
-
     <h1>URLS</h1>
-
     <ul>
       <% for (const urlIndex in urls) { %>
         <li>
-          <%= urls[urlIndex].long %> - <%= urls[urlIndex].short %>
+          <%= urls[urlIndex].long %> - <a href =<%= urls[urlIndex].long %>><%= urls[urlIndex].short %></a>
           <%urls.forEach(function(urls){ %>
           <% }) %>
         </li>
       <% } %>
       <% for (const uuIndex in userUrls) { %>
       <li>
-        <%= userUrls[uuIndex].long %> - <%= userUrls[uuIndex].short %>
+        <%= userUrls[uuIndex].long %> - <a href =<%= userUrls[uuIndex].long %>><%= userUrls[uuIndex].short %></a>
         <% userUrls.forEach(function(userUrls){ %>
         <% }) %>
+        <% if ( userUrls[uuIndex].user_id === email) { %>
+        <form action="/urls/<%= userUrls[uuIndex].short %>/delete" method="post">
+            <button>Delete</button>
+          </form>
+          <a href='/urls/<%= userUrls[uuIndex].short %>'><button>Edit</button></a>
+          <% } %>
       </li>
       <% } %>
     </ul>
   <% } else {%>
     <p>You should go <a href='/login'><button>login</button></a></p>
   <% } %>
-
 </body>
