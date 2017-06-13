@@ -26,16 +26,6 @@ app.use(bodyParser.urlencoded({
 
 
 // urls list
-const urls = [{
-  short: 'b2xVn2',
-  long: 'http://www.lighthouselabs.ca',
-  user_id: 'asd@asd'
-},{
-  short:'9sm5xK',
-  long: 'http://www.google.com',
-  user_id: '1@1'
-}];
-
 const userUrls =[];
 
 
@@ -119,11 +109,11 @@ app.get('/', (req, res) => {
 
 // Search
 app.get('/urls', (req, res) => {
-  res.render('urls_index', { email: req.session.email, urls: urls, user: user, userUrls: userUrls});
+  res.render('urls_index', { email: req.session.email, user: user, userUrls: userUrls});
 });
 
 app.post('/urls', (req, res) => {
-  urls.push(req.body)
+  userUrls.push(req.body)
   res.redirect('/urls');
 });
 
@@ -158,6 +148,12 @@ app.get('/urls/:short', (req, res) => {
   }
   res.render('urls_show', { email: req.session.email, url: url });
 });
+
+//Redirect to long URL
+app.get('/u/:short', (req, res) => {
+  res.redirect(userUrls.find(m => m.short === req.params.short).long)
+})
+  
 
 // Replace long
 app.post('/urls/:short', (req, res) => {

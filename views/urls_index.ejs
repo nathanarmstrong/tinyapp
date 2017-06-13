@@ -13,16 +13,9 @@
       </form>
     <h1>URLS</h1>
     <ul>
-      <% for (const urlIndex in urls) { %>
-        <li>
-          <%= urls[urlIndex].long %> - <a href =<%= urls[urlIndex].long %>><%= urls[urlIndex].short %></a>
-          <%urls.forEach(function(urls){ %>
-          <% }) %>
-        </li>
-      <% } %>
       <% for (const uuIndex in userUrls) { %>
       <li>
-        <%= userUrls[uuIndex].long %> - <a href =<%= userUrls[uuIndex].long %>><%= userUrls[uuIndex].short %></a>
+        <%= userUrls[uuIndex].long %> - <a href =/u/<%= userUrls[uuIndex].short %>><%= userUrls[uuIndex].short %></a>
         <% userUrls.forEach(function(userUrls){ %>
         <% }) %>
         <% if ( userUrls[uuIndex].user_id === email) { %>
